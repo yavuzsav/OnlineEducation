@@ -8,5 +8,13 @@
       <Folder Include="Controllers" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\OnlineEducation.Business\OnlineEducation.Business.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5" />
+    </ItemGroup>
+
 
 </Project>

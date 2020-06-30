@@ -4,4 +4,15 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OnlineEducation.DataAccess\OnlineEducation.DataAccess.csproj" />
+      <ProjectReference Include="..\OnlineEducation.Entities\OnlineEducation.Entities.csproj" />
+    </ItemGroup>
+
 </Project>

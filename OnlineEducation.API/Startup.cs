@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OnlineEducation.Business.Extensions;
 
 namespace OnlineEducation.API
 {
@@ -26,6 +27,9 @@ namespace OnlineEducation.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddApplicationServices(Configuration);
+            services.AddIdentityService(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
