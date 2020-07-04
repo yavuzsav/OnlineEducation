@@ -17,8 +17,8 @@ namespace OnlineEducation.Core.ErrorHelpers
             Errors = error;
         }
 
-        private HttpStatusCode HttpStatusCode { get; }
+        public HttpStatusCode HttpStatusCode { get; }
 
-        private object Errors { get; }
+        public object Errors { get; }
     }
 }
