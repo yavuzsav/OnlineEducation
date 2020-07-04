@@ -11,12 +11,6 @@ namespace OnlineEducation.Core.ErrorHelpers
             Errors = errors;
         }
 
-        public RestException(HttpStatusCode httpStatusCode, string error = null)
-        {
-            HttpStatusCode = httpStatusCode;
-            Errors = error;
-        }
-
         public HttpStatusCode HttpStatusCode { get; }
 
         public object Errors { get; }
