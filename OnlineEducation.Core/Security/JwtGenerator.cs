@@ -21,7 +21,7 @@ namespace OnlineEducation.Core.Security
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"]));
         }
 
-        public async Task<string> CreateToken(AppUser user)
+        public async Task<string> CreateTokenAsync(AppUser user)
         {
             var claims = new List<Claim>
             {

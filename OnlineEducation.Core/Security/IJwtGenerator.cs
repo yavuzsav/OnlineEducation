@@ -5,6 +5,6 @@ namespace OnlineEducation.Core.Security
 {
     public interface IJwtGenerator
     {
-        Task<string> CreateToken(AppUser user);
+        Task<string> CreateTokenAsync(AppUser user);
     }
 }
