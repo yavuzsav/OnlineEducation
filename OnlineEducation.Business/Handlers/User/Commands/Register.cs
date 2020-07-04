@@ -47,6 +47,7 @@ namespace OnlineEducation.Business.Handlers.User.Commands
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Student");
                     return new UserDto
                     {
                         Email = user.Email,

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OnlineEducation.DataAccess.Concrete.EntityFramework;
+using OnlineEducation.DataAccess.Concrete.SeedData;
 using OnlineEducation.Entities.Identity;
 
 namespace OnlineEducation.API
@@ -26,7 +27,9 @@ namespace OnlineEducation.API
                 try
                 {
                     var context = services.GetRequiredService<OnlineEducationContext>();
+                    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                     await context.Database.MigrateAsync();
+                    await AppRoleSeed.SeedData(roleManager);
                 }
                 catch (Exception ex)
                 {
