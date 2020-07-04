@@ -28,8 +28,9 @@ namespace OnlineEducation.API
         {
             services.AddControllers();
 
+            services.AddAuthenticationService(Configuration);
             services.AddApplicationServices(Configuration);
-            services.AddIdentityService(Configuration);
+            services.AddIdentityService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

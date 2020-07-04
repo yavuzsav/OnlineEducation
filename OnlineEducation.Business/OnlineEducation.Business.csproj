@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\OnlineEducation.Core\OnlineEducation.Core.csproj" />
       <ProjectReference Include="..\OnlineEducation.DataAccess\OnlineEducation.DataAccess.csproj" />
       <ProjectReference Include="..\OnlineEducation.Entities\OnlineEducation.Entities.csproj" />
     </ItemGroup>

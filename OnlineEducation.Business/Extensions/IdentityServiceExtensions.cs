@@ -11,7 +11,7 @@ namespace OnlineEducation.Business.Extensions
 {
     public static class IdentityServiceExtensions
     {
-        public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityService(this IServiceCollection services)
         {
             var builder = services.AddIdentityCore<AppUser>();
 
@@ -30,19 +30,6 @@ namespace OnlineEducation.Business.Extensions
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             });
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"])),
-                        // ValidIssuer = configuration["Token:Issuer"],
-                        ValidateIssuer = true,
-                        ValidateAudience = false,
-                    };
-                });
 
             return services;
         }
