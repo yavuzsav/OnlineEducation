@@ -28,8 +28,10 @@ namespace OnlineEducation.API
                 {
                     var context = services.GetRequiredService<OnlineEducationContext>();
                     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     await context.Database.MigrateAsync();
                     await AppRoleSeed.SeedData(roleManager);
+                    await AppUserSeed.SeedData(userManager);
                 }
                 catch (Exception ex)
                 {
