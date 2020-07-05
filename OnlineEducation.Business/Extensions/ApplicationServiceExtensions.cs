@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineEducation.DataAccess.Concrete.EntityFramework;
+using OnlineEducation.DataAccess.Interfaces;
 
 namespace OnlineEducation.Business.Extensions
 {
@@ -14,6 +15,8 @@ namespace OnlineEducation.Business.Extensions
             {
                 x.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EfGenericRepository<>));
 
             return services;
         }
