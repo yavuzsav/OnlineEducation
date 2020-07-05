@@ -17,6 +17,7 @@ namespace OnlineEducation.Business.Extensions
             });
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(EfGenericRepository<>));
+            services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
             return services;
         }
