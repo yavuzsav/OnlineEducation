@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OnlineEducation.Entities.Entities;
 using OnlineEducation.Entities.Identity;
 
 namespace OnlineEducation.DataAccess.Concrete.EntityFramework
@@ -14,5 +15,7 @@ namespace OnlineEducation.DataAccess.Concrete.EntityFramework
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
