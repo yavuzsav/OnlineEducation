@@ -36,7 +36,20 @@ namespace OnlineEducation.DataAccess.Concrete.EntityFramework
 
         public async Task<int> CompleteAsync()
         {
-            return await _context.SaveChangesAsync();
+            var returnValue = 0;
+            await using var dbContextTransaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                returnValue = await _context.SaveChangesAsync();
+                await dbContextTransaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                await dbContextTransaction.RollbackAsync();
+            }
+
+            return returnValue;
         }
 
         public void Dispose()
