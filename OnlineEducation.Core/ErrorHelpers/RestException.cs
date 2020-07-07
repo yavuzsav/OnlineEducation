@@ -9,7 +9,7 @@ namespace OnlineEducation.Core.ErrorHelpers
         {
             HttpStatusCode = httpStatusCode;
 
-            if (Errors == null)
+            if (errors == null)
             {
                 switch (HttpStatusCode)
                 {

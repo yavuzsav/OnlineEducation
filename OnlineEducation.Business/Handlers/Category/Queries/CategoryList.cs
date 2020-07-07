@@ -7,7 +7,7 @@ using OnlineEducation.DataAccess.Interfaces;
 
 namespace OnlineEducation.Business.Handlers.Category.Queries
 {
-    public class ListCategory
+    public class CategoryList
     {
         public class Query : IRequest<Pagination<Entities.Entities.Category>>
         {

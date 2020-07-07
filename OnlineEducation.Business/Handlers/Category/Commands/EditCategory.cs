@@ -9,7 +9,7 @@ using OnlineEducation.DataAccess.Interfaces;
 
 namespace OnlineEducation.Business.Handlers.Category.Commands
 {
-    public class UpdateCategory
+    public class EditCategory
     {
         public class Command : IRequest
         {
