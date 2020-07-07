@@ -154,7 +154,7 @@ namespace OnlineEducation.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Lesson");
+                    b.ToTable("Lessons");
                 });
 
             modelBuilder.Entity("OnlineEducation.Entities.Identity.AppRole", b =>

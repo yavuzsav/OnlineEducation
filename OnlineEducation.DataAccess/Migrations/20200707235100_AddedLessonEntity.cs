@@ -8,7 +8,7 @@ namespace OnlineEducation.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Lesson",
+                name: "Lessons",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -18,9 +18,9 @@ namespace OnlineEducation.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lesson", x => x.Id);
+                    table.PrimaryKey("PK_Lessons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lesson_Categories_CategoryId",
+                        name: "FK_Lessons_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -28,15 +28,15 @@ namespace OnlineEducation.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lesson_CategoryId",
-                table: "Lesson",
+                name: "IX_Lessons_CategoryId",
+                table: "Lessons",
                 column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Lesson");
+                name: "Lessons");
         }
     }
 }

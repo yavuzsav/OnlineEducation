@@ -17,5 +17,6 @@ namespace OnlineEducation.DataAccess.Concrete.EntityFramework
         }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
     }
 }

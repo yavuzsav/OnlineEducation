@@ -9,7 +9,7 @@ using OnlineEducation.DataAccess.Concrete.EntityFramework;
 namespace OnlineEducation.DataAccess.Migrations
 {
     [DbContext(typeof(OnlineEducationContext))]
-    [Migration("20200707212018_AddedLessonEntity")]
+    [Migration("20200707235100_AddedLessonEntity")]
     partial class AddedLessonEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,7 +156,7 @@ namespace OnlineEducation.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Lesson");
+                    b.ToTable("Lessons");
                 });
 
             modelBuilder.Entity("OnlineEducation.Entities.Identity.AppRole", b =>
