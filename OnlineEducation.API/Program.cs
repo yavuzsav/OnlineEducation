@@ -30,8 +30,9 @@ namespace OnlineEducation.API
                     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     await context.Database.MigrateAsync();
-                    await AppRoleSeed.SeedData(roleManager);
-                    await AppUserSeed.SeedData(userManager);
+                    await AppRoleSeed.SeedDataAsync(roleManager);
+                    await AppUserSeed.SeedDataAsync(userManager);
+                    await Seed.SeedDataAsync(context);
                 }
                 catch (Exception ex)
                 {
