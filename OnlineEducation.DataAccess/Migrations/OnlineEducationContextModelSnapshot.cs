@@ -120,9 +120,9 @@ namespace OnlineEducation.DataAccess.Migrations
 
             modelBuilder.Entity("OnlineEducation.Entities.Entities.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");

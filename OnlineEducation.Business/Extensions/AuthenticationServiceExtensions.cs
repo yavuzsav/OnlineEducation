@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using OnlineEducation.Core.Interfaces;
 using OnlineEducation.Core.Security;
 
 namespace OnlineEducation.Business.Extensions

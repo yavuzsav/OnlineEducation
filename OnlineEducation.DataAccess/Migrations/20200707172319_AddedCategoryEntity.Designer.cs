@@ -9,7 +9,7 @@ using OnlineEducation.DataAccess.Concrete.EntityFramework;
 namespace OnlineEducation.DataAccess.Migrations
 {
     [DbContext(typeof(OnlineEducationContext))]
-    [Migration("20200707142340_AddedCategoryEntity")]
+    [Migration("20200707172319_AddedCategoryEntity")]
     partial class AddedCategoryEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,9 +122,9 @@ namespace OnlineEducation.DataAccess.Migrations
 
             modelBuilder.Entity("OnlineEducation.Entities.Entities.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");

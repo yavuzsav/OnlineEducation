@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using OnlineEducation.Core.Interfaces;
 using OnlineEducation.Entities.Identity;
 
 namespace OnlineEducation.Core.Security

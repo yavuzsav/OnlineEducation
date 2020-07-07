@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,11 @@ namespace OnlineEducation.DataAccess.Concrete.EntityFramework
         }
 
         public async Task<T> GetByIdAsync(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T> GetByIdAsync(Guid id)
         {
             return await _context.Set<T>().FindAsync(id);
         }

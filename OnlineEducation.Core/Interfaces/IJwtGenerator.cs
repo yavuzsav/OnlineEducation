@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using OnlineEducation.Entities.Identity;
 
-namespace OnlineEducation.Core.Security
+namespace OnlineEducation.Core.Interfaces
 {
     public interface IJwtGenerator
     {

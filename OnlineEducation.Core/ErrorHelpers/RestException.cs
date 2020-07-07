@@ -8,7 +8,23 @@ namespace OnlineEducation.Core.ErrorHelpers
         public RestException(HttpStatusCode httpStatusCode, object errors = null)
         {
             HttpStatusCode = httpStatusCode;
-            Errors = errors;
+
+            if (Errors == null)
+            {
+                switch (HttpStatusCode)
+                {
+                    case HttpStatusCode.NotFound:
+                        Errors = "Not Found";
+                        break;
+                    case HttpStatusCode.Unauthorized:
+                        Errors = "Unauthorized";
+                        break;
+                }
+            }
+            else
+            {
+                Errors = errors;
+            }
         }
 
         public HttpStatusCode HttpStatusCode { get; }
