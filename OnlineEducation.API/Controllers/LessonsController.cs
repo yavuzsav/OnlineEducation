@@ -5,14 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineEducation.Business.Handlers.Lesson.Commands;
 using OnlineEducation.Business.Handlers.Lesson.Queries;
 using OnlineEducation.Core.PaginationHelper;
-using OnlineEducation.Entities.Entities;
+using OnlineEducation.Entities.Dtos;
 
 namespace OnlineEducation.API.Controllers
 {
     public class LessonsController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<Pagination<Lesson>>> GetAll([FromQuery] PaginationParams paginationParams)
+        public async Task<ActionResult<Pagination<LessonWithCategoryNameDto>>> GetAll(
+            [FromQuery] PaginationParams paginationParams)
         {
             return await Mediator.Send(new LessonList.Query {PaginationParams = paginationParams});
         }
