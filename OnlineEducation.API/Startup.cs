@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using OnlineEducation.API.Middleware;
 using OnlineEducation.Business.Extensions;
 using OnlineEducation.Business.Handlers.Category.Queries;
+using OnlineEducation.Business.Handlers.User;
 using OnlineEducation.Business.Handlers.User.Commands;
 
 namespace OnlineEducation.API
@@ -31,7 +35,12 @@ namespace OnlineEducation.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+                {
+                    // var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    // options.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddFluentValidation(config => { config.RegisterValidatorsFromAssemblyContaining<LoginValidator>(); });
 
             services.AddAuthenticationService(Configuration);
             services.AddApplicationServices(Configuration);
