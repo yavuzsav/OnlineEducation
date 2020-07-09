@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OnlineEducation.API.Middleware;
 using OnlineEducation.Business.Extensions;
+using OnlineEducation.Business.Handlers.Category.Queries;
 using OnlineEducation.Business.Handlers.User.Commands;
 
 namespace OnlineEducation.API
@@ -36,6 +38,7 @@ namespace OnlineEducation.API
             services.AddIdentityService();
 
             services.AddMediatR(typeof(Register.Handler).Assembly);
+            services.AddAutoMapper(typeof(GetCategoryWithLessons.Handler));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

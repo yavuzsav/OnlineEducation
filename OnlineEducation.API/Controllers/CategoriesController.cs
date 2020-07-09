@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineEducation.Business.Handlers.Category.Commands;
 using OnlineEducation.Business.Handlers.Category.Queries;
 using OnlineEducation.Core.PaginationHelper;
+using OnlineEducation.Entities.Dtos;
 using OnlineEducation.Entities.Entities;
 
 namespace OnlineEducation.API.Controllers
@@ -16,6 +17,12 @@ namespace OnlineEducation.API.Controllers
             [FromQuery] PaginationParams paginationParams)
         {
             return await Mediator.Send(new CategoryList.Query {PaginationParams = paginationParams});
+        }
+
+        [HttpGet("{id}/lessons")]
+        public async Task<ActionResult<CategoryDto>> GetCategory(Guid id)
+        {
+            return await Mediator.Send(new GetCategoryWithLessons.Query {Id = id});
         }
 
         [HttpPost]
