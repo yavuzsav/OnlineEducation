@@ -147,10 +147,15 @@ namespace OnlineEducation.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
 
                     b.ToTable("Chapters");
                 });
@@ -345,6 +350,15 @@ namespace OnlineEducation.DataAccess.Migrations
                     b.HasOne("OnlineEducation.Entities.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("OnlineEducation.Entities.Entities.Chapter", b =>
+                {
+                    b.HasOne("OnlineEducation.Entities.Entities.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

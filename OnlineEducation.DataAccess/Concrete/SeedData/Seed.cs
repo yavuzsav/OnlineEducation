@@ -58,6 +58,58 @@ namespace OnlineEducation.DataAccess.Concrete.SeedData
                 await context.Lessons.AddRangeAsync(lessons);
             }
 
+            var chapters = new List<Chapter>();
+            if (!context.Chapters.Any())
+            {
+                chapters.AddRange(new List<Chapter>
+                {
+                    new Chapter
+                    {
+                        Lesson = lessons[0], Name = "1.ünite", Content = "1.content",
+                        Description = "9.sınıf matematik 1.ünite",
+                        ChapterVideos = new List<ChapterVideo>
+                        {
+                            new ChapterVideo
+                            {
+                                Url =
+                                    "https://res.cloudinary.com/drszt4hzs/video/upload/v1594398595/OnlineEducation/ChapterVideos/Istanbul_City_in_4K_si5vwj.mp4",
+                                PublicId = "Istanbul_City_in_4K_si5vwj"
+                            }
+                        }
+                    },
+                    new Chapter
+                    {
+                        Lesson = lessons[0], Name = "2.ünite", Content = "2.content",
+                        Description = "9.sınıf matematik 2.ünite",
+                        ChapterVideos = new List<ChapterVideo>
+                        {
+                            new ChapterVideo
+                            {
+                                Url =
+                                    "https://res.cloudinary.com/drszt4hzs/video/upload/v1594398595/OnlineEducation/ChapterVideos/Istanbul_City_in_4K_si5vwj.mp4",
+                                PublicId = "Istanbul_City_in_4K_si5vwj"
+                            }
+                        }
+                    },
+                    new Chapter
+                    {
+                        Lesson = lessons[0], Name = "3.ünite", Content = "3.content",
+                        Description = "9.sınıf matematik 3.ünite",
+                        ChapterVideos = new List<ChapterVideo>
+                        {
+                            new ChapterVideo
+                            {
+                                Url =
+                                    "https://res.cloudinary.com/drszt4hzs/video/upload/v1594398595/OnlineEducation/ChapterVideos/Istanbul_City_in_4K_si5vwj.mp4",
+                                PublicId = "Istanbul_City_in_4K_si5vwj"
+                            }
+                        }
+                    }
+                });
+
+                await context.Chapters.AddRangeAsync(chapters);
+            }
+
             await context.SaveChangesAsync();
         }
     }
