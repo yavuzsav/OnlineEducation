@@ -16,7 +16,6 @@ namespace OnlineEducation.Business.Handlers.LessonHandlers
     {
         public EditLessonValidator()
         {
-            RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.CategoryId).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
         }

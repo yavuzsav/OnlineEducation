@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using OnlineEducation.Business.Specifications.ChapterSpecifications;
-using OnlineEducation.Core.PaginationHelper;
 using OnlineEducation.DataAccess.Interfaces;
 using OnlineEducation.Entities.Dtos;
 using OnlineEducation.Entities.Entities;
 
 namespace OnlineEducation.Business.Handlers.ChapterHandlers.Queries
 {
-    public class GetChaptersWithChaptersVideos
+    public class GetChapterDetails
     {
-        public class Query : IRequest<Pagination<ChapterWithChapterVideosDto>>
+        public class Query : IRequest<ChapterWithChapterVideosDto>
         {
-            public PaginationParams PaginationParams { get; set; }
+            public Guid ChapterId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Pagination<ChapterWithChapterVideosDto>>
+        public class Handler : IRequestHandler<Query, ChapterWithChapterVideosDto>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
@@ -29,21 +28,20 @@ namespace OnlineEducation.Business.Handlers.ChapterHandlers.Queries
                 _mapper = mapper;
             }
 
-            public async Task<Pagination<ChapterWithChapterVideosDto>> Handle(Query request,
+            public async Task<ChapterWithChapterVideosDto> Handle(Query request,
                 CancellationToken cancellationToken)
             {
                 var chapterRepository = _unitOfWork.Repository<Chapter>();
 
-                var spec = new ChapterWithChapterVideosAndLessonSpecification(request.PaginationParams);
-                var chapters = await chapterRepository.ListWithSpecificationAsync(spec);
+                var spec = new ChapterWithChapterVideosAndLessonSpecification(request.ChapterId);
+                var chapters = await chapterRepository.GetEntityWithSpecificationAsync(spec);
                 var count = await chapterRepository.CountAsync(new ChapterWithChapterVideosAndLessonSpecification());
 
                 var mappedData =
-                    _mapper.Map<IReadOnlyList<Chapter>, IReadOnlyList<ChapterWithChapterVideosDto>>(
+                    _mapper.Map<Chapter, ChapterWithChapterVideosDto>(
                         chapters);
 
-                return new Pagination<ChapterWithChapterVideosDto>(request.PaginationParams.PageIndex,
-                    request.PaginationParams.PageSize, count, mappedData);
+                return mappedData;
             }
         }
     }

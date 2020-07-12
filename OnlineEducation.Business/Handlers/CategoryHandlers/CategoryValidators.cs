@@ -15,7 +15,6 @@ namespace OnlineEducation.Business.Handlers.CategoryHandlers
     {
         public EditCategoryValidator()
         {
-            RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
         }
     }

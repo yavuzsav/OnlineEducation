@@ -13,6 +13,7 @@ namespace OnlineEducation.Business.Specifications.ChapterSpecifications
         public ChapterSpecification(PaginationParams paginationParams)
         {
             AddInclude(x => x.Lesson);
+            AddInclude(x => x.Lesson.Category);
             ApplyPaging(paginationParams.PageSize * (paginationParams.PageIndex - 1), paginationParams.PageSize);
 
             if (!string.IsNullOrEmpty(paginationParams.Sort))

@@ -17,7 +17,6 @@ namespace OnlineEducation.Business.Handlers.ChapterHandlers
     {
         public EditChapterValidator()
         {
-            RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.LessonId).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Content).NotEmpty();
