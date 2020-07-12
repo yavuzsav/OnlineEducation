@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using MediatR;
 using OnlineEducation.Core.ErrorHelpers;
 using OnlineEducation.DataAccess.Interfaces;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Lesson.Commands
+namespace OnlineEducation.Business.Handlers.ChapterHandlers.Commands
 {
-    public class DeleteLesson
+    public class DeleteChapter
     {
         public class Command : IRequest
         {
@@ -26,14 +27,12 @@ namespace OnlineEducation.Business.Handlers.Lesson.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var lessonRepository = _unitOfWork.Repository<Entities.Entities.Lesson>();
+                var chapterRepository = _unitOfWork.Repository<Chapter>();
 
-                var lesson = await lessonRepository.GetByIdAsync(request.Id);
+                var chapter = await chapterRepository.GetByIdAsync(request.Id);
+                if (chapter == null) throw new RestException(HttpStatusCode.NotFound);
 
-                if (lesson == null)
-                    throw new RestException(HttpStatusCode.NotFound);
-
-                lessonRepository.Delete(lesson);
+                chapterRepository.Delete(chapter);
 
                 var success = await _unitOfWork.CompleteAsync() > 0;
                 if (success) return Unit.Value;

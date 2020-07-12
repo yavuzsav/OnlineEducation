@@ -17,7 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OnlineEducation.API.Middleware;
 using OnlineEducation.Business.Extensions;
-using OnlineEducation.Business.Handlers.Category.Queries;
+using OnlineEducation.Business.Handlers.CategoryHandlers.Queries;
 using OnlineEducation.Business.Handlers.User;
 using OnlineEducation.Business.Handlers.User.Commands;
 

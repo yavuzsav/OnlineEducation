@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using OnlineEducation.Core.ErrorHelpers;
 using OnlineEducation.DataAccess.Interfaces;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Category.Commands
+namespace OnlineEducation.Business.Handlers.CategoryHandlers.Commands
 {
-    public class DeleteCategory
+    public class CreateCategory
     {
         public class Command : IRequest
         {
-            public Guid Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -26,13 +29,20 @@ namespace OnlineEducation.Business.Handlers.Category.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var categoryRepository = _unitOfWork.Repository<Entities.Entities.Category>();
+                var categoryRepository = _unitOfWork.Repository<Category>();
 
-                var category = await categoryRepository.GetByIdAsync(request.Id);
+                if (categoryRepository.ListAllAsync().Result.Any(x =>
+                    String.Equals(x.Name, request.Name, StringComparison.CurrentCultureIgnoreCase)))
+                    throw new RestException(HttpStatusCode.BadRequest, "Category name already exists");
 
-                if (category == null) throw new RestException(HttpStatusCode.NotFound);
+                var category = new Category
+                {
+                    Name = request.Name,
+                    Description = request.Description
+                };
 
-                categoryRepository.Delete(category);
+                categoryRepository.Add(category);
+
                 var success = await _unitOfWork.CompleteAsync() > 0;
                 if (success) return Unit.Value;
 

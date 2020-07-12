@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using OnlineEducation.Business.Handlers.Category.Commands;
+using OnlineEducation.Business.Handlers.CategoryHandlers.Commands;
 
-namespace OnlineEducation.Business.Handlers.Category
+namespace OnlineEducation.Business.Handlers.CategoryHandlers
 {
     public class CreateCategoryValidator : AbstractValidator<CreateCategory.Command>
     {

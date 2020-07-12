@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using OnlineEducation.Core.ErrorHelpers;
 using OnlineEducation.DataAccess.Interfaces;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Category.Commands
+namespace OnlineEducation.Business.Handlers.ChapterHandlers.Commands
 {
-    public class EditCategory
+    public class CreateChapter
     {
         public class Command : IRequest
         {
-            public Guid Id { get; set; }
+            public Guid LessonId { get; set; }
             public string Name { get; set; }
+            public string Content { get; set; }
             public string Description { get; set; }
         }
 
@@ -29,24 +30,25 @@ namespace OnlineEducation.Business.Handlers.Category.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var categoryRepository = _unitOfWork.Repository<Entities.Entities.Category>();
+                var lessonRepository = _unitOfWork.Repository<Lesson>();
 
-                var category = await categoryRepository.GetByIdAsync(request.Id);
+                var lesson = await lessonRepository.GetByIdAsync(request.LessonId);
+                if (lesson == null) throw new RestException(HttpStatusCode.NotFound, "Lesson not found");
 
-                if (category.Name != request.Name)
+                var chapterRepository = _unitOfWork.Repository<Chapter>();
+                var chapter = new Chapter
                 {
-                    if (categoryRepository.ListAllAsync().Result.Any(x =>
-                        String.Equals(x.Name, request.Name, StringComparison.CurrentCultureIgnoreCase)))
-                        throw new RestException(HttpStatusCode.BadRequest, "Category name already exists");
-                }
+                    LessonId = request.LessonId,
+                    Name = request.Name,
+                    Content = request.Content,
+                    Description = request.Description
+                };
 
-                if (category == null) throw new RestException(HttpStatusCode.NotFound);
-
-                category.Name = request.Name ?? category.Name;
-                category.Description = request.Description ?? category.Description;
+                chapterRepository.Add(chapter);
 
                 var success = await _unitOfWork.CompleteAsync() > 0;
                 if (success) return Unit.Value;
+
                 throw new Exception(ExceptionMessages.ProblemSavingChanges);
             }
         }

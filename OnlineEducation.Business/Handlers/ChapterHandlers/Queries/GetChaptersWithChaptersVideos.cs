@@ -7,8 +7,9 @@ using OnlineEducation.Business.Specifications.ChapterSpecifications;
 using OnlineEducation.Core.PaginationHelper;
 using OnlineEducation.DataAccess.Interfaces;
 using OnlineEducation.Entities.Dtos;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Chapter.Queries
+namespace OnlineEducation.Business.Handlers.ChapterHandlers.Queries
 {
     public class GetChaptersWithChaptersVideos
     {
@@ -31,14 +32,14 @@ namespace OnlineEducation.Business.Handlers.Chapter.Queries
             public async Task<Pagination<ChapterWithChapterVideosDto>> Handle(Query request,
                 CancellationToken cancellationToken)
             {
-                var chapterRepository = _unitOfWork.Repository<Entities.Entities.Chapter>();
+                var chapterRepository = _unitOfWork.Repository<Chapter>();
 
                 var spec = new ChapterWithChapterVideosAndLessonSpecification(request.PaginationParams);
                 var chapters = await chapterRepository.ListWithSpecificationAsync(spec);
                 var count = await chapterRepository.CountAsync(new ChapterWithChapterVideosAndLessonSpecification());
 
                 var mappedData =
-                    _mapper.Map<IReadOnlyList<Entities.Entities.Chapter>, IReadOnlyList<ChapterWithChapterVideosDto>>(
+                    _mapper.Map<IReadOnlyList<Chapter>, IReadOnlyList<ChapterWithChapterVideosDto>>(
                         chapters);
 
                 return new Pagination<ChapterWithChapterVideosDto>(request.PaginationParams.PageIndex,

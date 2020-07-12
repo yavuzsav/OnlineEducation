@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using OnlineEducation.Core.ErrorHelpers;
 using OnlineEducation.DataAccess.Interfaces;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Chapter.Commands
+namespace OnlineEducation.Business.Handlers.CategoryHandlers.Commands
 {
-    public class EditChapter
+    public class EditCategory
     {
         public class Command : IRequest
         {
             public Guid Id { get; set; }
-            public Guid LessonId { get; set; }
             public string Name { get; set; }
-            public string Content { get; set; }
             public string Description { get; set; }
         }
 
@@ -30,21 +30,24 @@ namespace OnlineEducation.Business.Handlers.Chapter.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var chapterRepository = _unitOfWork.Repository<Entities.Entities.Chapter>();
-                var chapter = await chapterRepository.GetByIdAsync(request.Id);
+                var categoryRepository = _unitOfWork.Repository<Category>();
 
-                var lessonRepository = _unitOfWork.Repository<Entities.Entities.Lesson>();
-                var lesson = await lessonRepository.GetByIdAsync(request.LessonId);
-                if (lesson == null) throw new RestException(HttpStatusCode.NotFound, "Lesson not found");
+                var category = await categoryRepository.GetByIdAsync(request.Id);
 
-                chapter.LessonId = request.LessonId;
-                chapter.Name = request.Name ?? chapter.Name;
-                chapter.Content = request.Content ?? chapter.Content;
-                chapter.Description = request.Description ?? chapter.Description;
+                if (category.Name != request.Name)
+                {
+                    if (categoryRepository.ListAllAsync().Result.Any(x =>
+                        String.Equals(x.Name, request.Name, StringComparison.CurrentCultureIgnoreCase)))
+                        throw new RestException(HttpStatusCode.BadRequest, "Category name already exists");
+                }
+
+                if (category == null) throw new RestException(HttpStatusCode.NotFound);
+
+                category.Name = request.Name ?? category.Name;
+                category.Description = request.Description ?? category.Description;
 
                 var success = await _unitOfWork.CompleteAsync() > 0;
                 if (success) return Unit.Value;
-
                 throw new Exception(ExceptionMessages.ProblemSavingChanges);
             }
         }

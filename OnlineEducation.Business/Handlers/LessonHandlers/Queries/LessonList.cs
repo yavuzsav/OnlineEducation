@@ -7,8 +7,9 @@ using OnlineEducation.Business.Specifications.LessonSpecifications;
 using OnlineEducation.Core.PaginationHelper;
 using OnlineEducation.DataAccess.Interfaces;
 using OnlineEducation.Entities.Dtos;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Lesson.Queries
+namespace OnlineEducation.Business.Handlers.LessonHandlers.Queries
 {
     public class LessonList
     {
@@ -31,14 +32,14 @@ namespace OnlineEducation.Business.Handlers.Lesson.Queries
             public async Task<Pagination<LessonWithCategoryNameDto>> Handle(Query request,
                 CancellationToken cancellationToken)
             {
-                var lessonRepository = _unitOfWork.Repository<Entities.Entities.Lesson>();
+                var lessonRepository = _unitOfWork.Repository<Lesson>();
 
                 var lessonSpec = new LessonSpecification(request.PaginationParams);
                 var lessons = await lessonRepository.ListWithSpecificationAsync(lessonSpec);
                 var count = await lessonRepository.CountAsync(new LessonSpecification());
 
                 var mappedData =
-                    _mapper.Map<IReadOnlyList<Entities.Entities.Lesson>, IReadOnlyList<LessonWithCategoryNameDto>>(
+                    _mapper.Map<IReadOnlyList<Lesson>, IReadOnlyList<LessonWithCategoryNameDto>>(
                         lessons);
 
                 return new Pagination<LessonWithCategoryNameDto>(request.PaginationParams.PageIndex,

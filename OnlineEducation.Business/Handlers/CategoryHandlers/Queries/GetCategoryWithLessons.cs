@@ -8,8 +8,9 @@ using OnlineEducation.Business.Specifications.CategorySpecifications;
 using OnlineEducation.Core.ErrorHelpers;
 using OnlineEducation.DataAccess.Interfaces;
 using OnlineEducation.Entities.Dtos;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Category.Queries
+namespace OnlineEducation.Business.Handlers.CategoryHandlers.Queries
 {
     public class GetCategoryWithLessons
     {
@@ -31,14 +32,14 @@ namespace OnlineEducation.Business.Handlers.Category.Queries
 
             public async Task<CategoryDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var categoryRepository = _unitOfWork.Repository<Entities.Entities.Category>();
+                var categoryRepository = _unitOfWork.Repository<Category>();
 
                 var categoryWithLessonsSpec = new CategoryWithLessonsSpecification(request.Id);
                 var category = await categoryRepository.GetEntityWithSpecificationAsync(categoryWithLessonsSpec);
 
                 if (category == null) throw new RestException(HttpStatusCode.NotFound);
 
-                return _mapper.Map<Entities.Entities.Category, CategoryDto>(category);
+                return _mapper.Map<Category, CategoryDto>(category);
             }
         }
     }

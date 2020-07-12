@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using MediatR;
 using OnlineEducation.Core.ErrorHelpers;
 using OnlineEducation.DataAccess.Interfaces;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Lesson.Commands
+namespace OnlineEducation.Business.Handlers.LessonHandlers.Commands
 {
     public class CreateLesson
     {
@@ -28,14 +29,14 @@ namespace OnlineEducation.Business.Handlers.Lesson.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var categoryRepository = _unitOfWork.Repository<Entities.Entities.Category>();
-                var lessonRepository = _unitOfWork.Repository<Entities.Entities.Lesson>();
+                var categoryRepository = _unitOfWork.Repository<Category>();
+                var lessonRepository = _unitOfWork.Repository<Lesson>();
 
                 var category = await categoryRepository.GetByIdAsync(request.CategoryId);
                 if (category == null)
                     throw new RestException(HttpStatusCode.NotFound, "Category not found");
 
-                var lesson = new Entities.Entities.Lesson
+                var lesson = new Lesson
                 {
                     Name = request.Name,
                     Description = request.Description,

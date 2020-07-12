@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using OnlineEducation.Entities.Dtos;
+using OnlineEducation.Entities.Entities;
 
-namespace OnlineEducation.Business.Handlers.Chapter
+namespace OnlineEducation.Business.Handlers.ChapterHandlers
 {
     public class ChapterMappingProfile : Profile
     {
         public ChapterMappingProfile()
         {
-            CreateMap<Entities.Entities.Chapter, ChapterDto>()
+            CreateMap<Chapter, ChapterDto>()
                 .ForMember(dest => dest.LessonName, opt => opt.MapFrom(src => src.Lesson.Name));
 
-            CreateMap<Entities.Entities.Chapter, ChapterWithChapterVideosDto>();
+            CreateMap<Chapter, ChapterWithChapterVideosDto>();
         }
     }
 }

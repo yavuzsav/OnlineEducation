@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OnlineEducation.Business.Handlers.Lesson.Commands;
-using OnlineEducation.Business.Handlers.Lesson.Queries;
+using OnlineEducation.Business.Handlers.LessonHandlers.Commands;
+using OnlineEducation.Business.Handlers.LessonHandlers.Queries;
 using OnlineEducation.Core.PaginationHelper;
 using OnlineEducation.Entities.Dtos;
 
