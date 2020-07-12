@@ -19,7 +19,7 @@ namespace OnlineEducation.API.Controllers
             return await Mediator.Send(new CategoryList.Query {PaginationParams = paginationParams});
         }
 
-        [HttpGet("{id}/lessons")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<CategoryDto>> GetCategory(Guid id)
         {
             return await Mediator.Send(new GetCategoryWithLessons.Query {Id = id});

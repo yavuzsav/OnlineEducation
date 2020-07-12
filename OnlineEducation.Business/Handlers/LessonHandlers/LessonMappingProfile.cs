@@ -12,6 +12,8 @@ namespace OnlineEducation.Business.Handlers.LessonHandlers
 
             CreateMap<Lesson, LessonWithCategoryNameDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+
+            CreateMap<Lesson, LessonWithChaptersDto>();
         }
     }
 }

@@ -18,6 +18,12 @@ namespace OnlineEducation.API.Controllers
             return await Mediator.Send(new LessonList.Query {PaginationParams = paginationParams});
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<LessonWithChaptersDto>> GetDetails(Guid id)
+        {
+            return await Mediator.Send(new LessonDetails.Query {Id = id});
+        }
+
         [HttpPost]
         public async Task<ActionResult<Unit>> Create(CreateLesson.Command command)
         {

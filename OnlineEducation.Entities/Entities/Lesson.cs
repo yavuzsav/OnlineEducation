@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OnlineEducation.Entities.Abstract;
 
 namespace OnlineEducation.Entities.Entities
@@ -11,5 +12,6 @@ namespace OnlineEducation.Entities.Entities
 
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
+        public ICollection<Chapter> Chapters { get; set; }
     }
 }
