@@ -97,7 +97,10 @@ namespace OnlineEducation.Core.Services
 
         public async Task<bool> DeleteVideoAsync(string publicId)
         {
-            var deleteParams = new DeletionParams(publicId);
+            var deleteParams = new DeletionParams(publicId)
+            {
+                ResourceType = ResourceType.Video
+            };
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result.Result == "ok";

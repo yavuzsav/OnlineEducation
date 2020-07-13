@@ -35,7 +35,6 @@ namespace OnlineEducation.Business.Handlers.ChapterHandlers.Queries
 
                 var spec = new ChapterWithChapterVideosAndLessonSpecification(request.ChapterId);
                 var chapters = await chapterRepository.GetEntityWithSpecificationAsync(spec);
-                var count = await chapterRepository.CountAsync(new ChapterWithChapterVideosAndLessonSpecification());
 
                 var mappedData =
                     _mapper.Map<Chapter, ChapterWithChapterVideosDto>(

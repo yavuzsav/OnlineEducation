@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineEducation.Core.Helpers;
 using OnlineEducation.Core.Interfaces;
 using OnlineEducation.Core.Security;
 using OnlineEducation.Core.Services;
@@ -23,6 +24,8 @@ namespace OnlineEducation.Business.Extensions
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IVideoService, CloudinaryVideoService>();
+
+            services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
             return services;
         }

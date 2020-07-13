@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using OnlineEducation.Business.Specifications.ChapterSpecifications;
 using OnlineEducation.Core.ErrorHelpers;
 using OnlineEducation.Core.Interfaces;
 using OnlineEducation.DataAccess.Interfaces;
@@ -33,12 +34,18 @@ namespace OnlineEducation.Business.Handlers.ChapterVideoHandlers.Commands
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var chapterRepository = _unitOfWork.Repository<Chapter>();
-                var chapter = await chapterRepository.GetByIdAsync(request.ChapterId);
+
+                var spec = new ChapterWithChapterVideosAndLessonSpecification(request.ChapterId);
+                var chapter = await chapterRepository.GetEntityWithSpecificationAsync(spec);
 
                 if (chapter == null) throw new RestException(HttpStatusCode.NotFound);
 
                 var chapterVideo = chapter.ChapterVideos.FirstOrDefault(x => x.Id == request.ChapterVideoId);
-                var result = chapterVideo != null && await _videoService.DeleteVideoAsync(chapterVideo.PublicId);
+
+                if (chapterVideo != null && string.IsNullOrEmpty(chapterVideo.PublicId))
+                    throw new RestException(HttpStatusCode.NotFound);
+
+                var result = await _videoService.DeleteVideoAsync(chapterVideo.PublicId);
 
                 if (!result) throw new Exception(ExceptionMessages.ProblemDeletingVideo);
 
