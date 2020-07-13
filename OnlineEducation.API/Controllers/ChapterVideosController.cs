@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnlineEducation.API.Helper;
 using OnlineEducation.Business.Handlers.ChapterVideoHandlers.Commands;
 
 namespace OnlineEducation.API.Controllers
@@ -11,9 +12,9 @@ namespace OnlineEducation.API.Controllers
     {
         [RequestSizeLimit(250000000)]
         [HttpPost("{id}")]
-        public async Task<ActionResult<Unit>> UploadVideo(Guid id, [FromForm] IFormFile file)
+        public async Task<ActionResult<Unit>> UploadVideo(Guid id, [FromForm] VideoFile videoFile)
         {
-            return await Mediator.Send(new CreateChapterVideo.Command {ChapterId = id, File = file});
+            return await Mediator.Send(new CreateChapterVideo.Command {ChapterId = id, File = videoFile.File});
         }
 
         [HttpDelete("{chapterId}/videos/{chapterVideoId}")]
