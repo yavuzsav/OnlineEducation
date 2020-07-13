@@ -27,7 +27,7 @@ namespace OnlineEducation.Core.Services
             _cloudinary = new Cloudinary(acc);
         }
 
-        public async Task<UploadResult> UploadVideos(List<IFormFile> files)
+        public async Task<UploadResult> UploadVideosAsync(List<IFormFile> files)
         {
             var uploadResult = new VideoUploadResult();
 
@@ -56,7 +56,7 @@ namespace OnlineEducation.Core.Services
             };
         }
 
-        public async Task<UploadResult> UploadVideo(IFormFile file)
+        public async Task<UploadResult> UploadVideoAsync(IFormFile file)
         {
             if (file.Length <= 0) throw new Exception(ExceptionMessages.VideoUploadError);
 
@@ -80,7 +80,7 @@ namespace OnlineEducation.Core.Services
             };
         }
 
-        public async Task<bool> DeleteVideos(List<string> publicIds)
+        public async Task<bool> DeleteVideosAsync(List<string> publicIds)
         {
             var result = new DeletionResult();
 
@@ -95,7 +95,7 @@ namespace OnlineEducation.Core.Services
             return result.Result == "ok";
         }
 
-        public async Task<bool> DeleteVideo(string publicId)
+        public async Task<bool> DeleteVideoAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
             var result = await _cloudinary.DestroyAsync(deleteParams);
