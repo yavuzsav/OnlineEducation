@@ -20,5 +20,6 @@ namespace OnlineEducation.DataAccess.Concrete.EntityFramework
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<ChapterVideo> ChapterVideos { get; set; }
+        public DbSet<ExamQuestion> ExamQuestions { get; set; }
     }
 }

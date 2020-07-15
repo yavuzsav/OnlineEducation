@@ -14,5 +14,6 @@ namespace OnlineEducation.Entities.Entities
         public Guid LessonId { get; set; }
         public Lesson Lesson { get; set; }
         public ICollection<ChapterVideo> ChapterVideos { get; set; }
+        public ICollection<ExamQuestion> ExamQuestions { get; set; }
     }
 }
