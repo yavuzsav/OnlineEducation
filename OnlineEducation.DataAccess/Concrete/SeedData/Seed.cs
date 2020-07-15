@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using OnlineEducation.DataAccess.Concrete.EntityFramework;
 using OnlineEducation.Entities.Entities;
+using Bogus;
+using OnlineEducation.Entities.Enums;
 
 namespace OnlineEducation.DataAccess.Concrete.SeedData
 {
@@ -108,6 +110,20 @@ namespace OnlineEducation.DataAccess.Concrete.SeedData
                 });
 
                 await context.Chapters.AddRangeAsync(chapters);
+            }
+
+            if (!context.ExamQuestions.Any())
+            {
+                var faker = new Faker<ExamQuestion>()
+                    .RuleFor(x => x.Content, (f, q) => f.Lorem.Paragraphs(1, 4))
+                    .RuleFor(x => x.Option1, (f, q) => f.Lorem.Lines(1))
+                    .RuleFor(x => x.Option2, (f, q) => f.Lorem.Lines(1))
+                    .RuleFor(x => x.Option3, (f, q) => f.Lorem.Lines(1))
+                    .RuleFor(x => x.Option4, (f, q) => f.Lorem.Lines(1))
+                    .RuleFor(x => x.CorrectAnswer, (f, q) => f.PickRandom<CorrectAnswer>())
+                    .RuleFor(x => x.ChapterId, (f, q) => f.PickRandom(chapters).Id);
+
+                await context.ExamQuestions.AddRangeAsync(faker.Generate(500));
             }
 
             await context.SaveChangesAsync();
