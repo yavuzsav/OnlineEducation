@@ -24,6 +24,14 @@ namespace OnlineEducation.API.Controllers
             return await Mediator.Send(new GetChapterDetails.Query {ChapterId = id});
         }
 
+        [HttpGet("{id}/questions")]
+        public async Task<ActionResult<Pagination<ExamQuestionDto>>> GetChapterQuestions(Guid id,
+            [FromQuery] PaginationParams paginationParams)
+        {
+            return await Mediator.Send(new GetChapterQuestions.Query
+                {ChapterId = id, PaginationParams = paginationParams});
+        }
+
         [HttpPost]
         public async Task<Unit> Create(CreateChapter.Command command)
         {
