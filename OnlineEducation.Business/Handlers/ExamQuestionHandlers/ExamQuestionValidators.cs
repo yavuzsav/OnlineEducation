@@ -12,7 +12,7 @@ namespace OnlineEducation.Business.Handlers.ExamQuestionHandlers
             RuleFor(x => x.Option2).NotEmpty();
             RuleFor(x => x.Option3).NotEmpty();
             RuleFor(x => x.Option4).NotEmpty();
-            RuleFor(x => x.CorrectAnswer).NotEmpty();
+            RuleFor(x => x.CorrectAnswer).NotNull();
         }
     }
 
@@ -25,7 +25,7 @@ namespace OnlineEducation.Business.Handlers.ExamQuestionHandlers
             RuleFor(x => x.Option2).NotEmpty();
             RuleFor(x => x.Option3).NotEmpty();
             RuleFor(x => x.Option4).NotEmpty();
-            RuleFor(x => x.CorrectAnswer).NotEmpty();
+            RuleFor(x => x.CorrectAnswer).NotNull().IsInEnum();
         }
     }
 }
