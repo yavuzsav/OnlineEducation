@@ -9,7 +9,7 @@ using OnlineEducation.DataAccess.Concrete.EntityFramework;
 namespace OnlineEducation.DataAccess.Migrations
 {
     [DbContext(typeof(OnlineEducationContext))]
-    [Migration("20200719170412_AddedVideoAnswerForExamQuestionEntity")]
+    [Migration("20200719171741_AddedVideoAnswerForExamQuestionEntity")]
     partial class AddedVideoAnswerForExamQuestionEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,9 +212,6 @@ namespace OnlineEducation.DataAccess.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Option4")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("VideoAnswerFormExamQuestion")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

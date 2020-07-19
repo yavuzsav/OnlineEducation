@@ -7,12 +7,6 @@ namespace OnlineEducation.DataAccess.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<Guid>(
-                name: "VideoAnswerFormExamQuestion",
-                table: "ExamQuestions",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
             migrationBuilder.CreateTable(
                 name: "VideoAnswerForExamQuestions",
                 columns: table => new
@@ -45,10 +39,6 @@ namespace OnlineEducation.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "VideoAnswerForExamQuestions");
-
-            migrationBuilder.DropColumn(
-                name: "VideoAnswerFormExamQuestion",
-                table: "ExamQuestions");
         }
     }
 }

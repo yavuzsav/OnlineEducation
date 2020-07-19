@@ -212,9 +212,6 @@ namespace OnlineEducation.DataAccess.Migrations
                     b.Property<string>("Option4")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("VideoAnswerFormExamQuestion")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChapterId");
