@@ -16,5 +16,8 @@ namespace OnlineEducation.Entities.Entities
 
         public Guid ChapterId { get; set; }
         public Chapter Chapter { get; set; }
+        
+        public Guid VideoAnswerFormExamQuestion { get; set; }
+        public VideoAnswerForExamQuestion VideoAnswerForExamQuestion { get; set; }
     }
 }
