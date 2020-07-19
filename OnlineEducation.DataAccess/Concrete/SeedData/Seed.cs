@@ -121,7 +121,12 @@ namespace OnlineEducation.DataAccess.Concrete.SeedData
                     .RuleFor(x => x.Option3, (f, q) => f.Lorem.Lines(1))
                     .RuleFor(x => x.Option4, (f, q) => f.Lorem.Lines(1))
                     .RuleFor(x => x.CorrectAnswer, (f, q) => f.PickRandom<CorrectAnswer>())
-                    .RuleFor(x => x.ChapterId, (f, q) => f.PickRandom(chapters).Id);
+                    .RuleFor(x => x.ChapterId, (f, q) => f.PickRandom(chapters).Id)
+                    .RuleFor(x => x.VideoAnswerForExamQuestion, (f, q) => new VideoAnswerForExamQuestion
+                    {
+                        Url = f.Image.PicsumUrl(),
+                        PublicId = "fake data",
+                    });
 
                 await context.ExamQuestions.AddRangeAsync(faker.Generate(500));
             }
