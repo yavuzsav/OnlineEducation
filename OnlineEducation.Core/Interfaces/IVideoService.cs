@@ -7,8 +7,8 @@ namespace OnlineEducation.Core.Interfaces
 {
     public interface IVideoService
     {
-        Task<UploadResult> UploadVideosAsync(List<IFormFile> files);
-        Task<UploadResult> UploadVideoAsync(IFormFile file);
+        Task<UploadResult> UploadVideosAsync(List<IFormFile> files, string folder = "");
+        Task<UploadResult> UploadVideoAsync(IFormFile file, string folder = "");
         Task<bool> DeleteVideosAsync(List<string> publicIds);
         Task<bool> DeleteVideoAsync(string publicId);
     }

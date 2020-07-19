@@ -27,7 +27,7 @@ namespace OnlineEducation.Core.Services
             _cloudinary = new Cloudinary(acc);
         }
 
-        public async Task<UploadResult> UploadVideosAsync(List<IFormFile> files)
+        public async Task<UploadResult> UploadVideosAsync(List<IFormFile> files, string folder = "")
         {
             var uploadResult = new VideoUploadResult();
 
@@ -39,7 +39,7 @@ namespace OnlineEducation.Core.Services
                 var uploadParams = new VideoUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Folder = "OnlineEducation/ChapterVideos"
+                    Folder = folder
                 };
 
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
@@ -56,7 +56,7 @@ namespace OnlineEducation.Core.Services
             };
         }
 
-        public async Task<UploadResult> UploadVideoAsync(IFormFile file)
+        public async Task<UploadResult> UploadVideoAsync(IFormFile file, string folder = "")
         {
             if (file.Length <= 0) throw new Exception(ExceptionMessages.VideoUploadError);
 
@@ -64,7 +64,7 @@ namespace OnlineEducation.Core.Services
             var uploadParams = new VideoUploadParams
             {
                 File = new FileDescription(file.FileName, stream),
-                Folder = "OnlineEducation/ChapterVideos"
+                Folder = folder
             };
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);

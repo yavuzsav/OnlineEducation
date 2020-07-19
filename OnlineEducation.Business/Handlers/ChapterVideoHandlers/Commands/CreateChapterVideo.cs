@@ -39,7 +39,8 @@ namespace OnlineEducation.Business.Handlers.ChapterVideoHandlers.Commands
                 var chapter = await chapterRepository.GetEntityWithSpecificationAsync(spec);
                 if (chapter == null) throw new RestException(HttpStatusCode.NotFound, "Chapter not found");
 
-                var videoUploadResult = await _videoService.UploadVideoAsync(request.File);
+                var videoUploadResult =
+                    await _videoService.UploadVideoAsync(request.File, "OnlineEducation/ChapterVideos");
 
                 var chapterVideo = new ChapterVideo
                 {
