@@ -8,7 +8,10 @@ namespace OnlineEducation.Business.Handlers.ExamQuestionHandlers
     {
         public ExamQuestionMappingProfile()
         {
-            CreateMap<ExamQuestion, ExamQuestionDto>();
+            CreateMap<VideoAnswerForExamQuestion, VideoAnswerForExamQuestionDto>();
+            CreateMap<ExamQuestion, ExamQuestionDto>()
+                .ForMember(dest => dest.VideoAnswerForExamQuestions,
+                    opt => opt.MapFrom(src => src.VideoAnswerForExamQuestion));
         }
     }
 }

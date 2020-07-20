@@ -34,6 +34,11 @@ namespace OnlineEducation.DataAccess.Concrete
 
             query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
 
+            if (specification.NestedIncludes.Count > 0)
+            {
+                query = specification.NestedIncludes.Aggregate(query, (current, include) => current.Include(include));
+            }
+
             return query;
         }
     }

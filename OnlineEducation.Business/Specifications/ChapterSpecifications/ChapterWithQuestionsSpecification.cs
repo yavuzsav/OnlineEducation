@@ -17,6 +17,7 @@ namespace OnlineEducation.Business.Specifications.ChapterSpecifications
             x.Id == chapterId)
         {
             AddInclude(x => x.ExamQuestions);
+            AddNestedInclude("ExamQuestions.VideoAnswerForExamQuestion");
             ApplyPaging(paginationParams.PageSize * (paginationParams.PageIndex - 1), paginationParams.PageSize);
 
             if (!string.IsNullOrEmpty(paginationParams.Sort))

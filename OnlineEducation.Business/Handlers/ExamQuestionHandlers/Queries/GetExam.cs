@@ -34,7 +34,9 @@ namespace OnlineEducation.Business.Handlers.ExamQuestionHandlers.Queries
                 _mapper = mapper;
             }
 
+#pragma warning disable 1998
             public async Task<IReadOnlyList<ExamQuestionDto>> Handle(Query request, CancellationToken cancellationToken)
+#pragma warning restore 1998
             {
                 var chapterRepository = _unitOfWork.Repository<Chapter>();
                 var chapterSpec = new ChaptersWithQuestionsSpecification(request.ChapterId);

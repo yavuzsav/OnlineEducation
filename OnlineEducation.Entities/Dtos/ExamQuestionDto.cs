@@ -12,5 +12,7 @@ namespace OnlineEducation.Entities.Dtos
         public string Option3 { get; set; }
         public string Option4 { get; set; }
         public CorrectAnswer CorrectAnswer { get; set; }
+
+        public VideoAnswerForExamQuestionDto VideoAnswerForExamQuestions { get; set; }
     }
 }
