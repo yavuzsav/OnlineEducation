@@ -1,8 +1,9 @@
 ﻿using System;
+using OnlineEducation.Entities.Abstract;
 
 namespace OnlineEducation.Entities.Entities
 {
-    public class VideoAnswerForExamQuestion
+    public class VideoAnswerForExamQuestion : IEntity
     {
         public Guid Id { get; set; }
         public string PublicId { get; set; }
