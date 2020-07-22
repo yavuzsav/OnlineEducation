@@ -50,8 +50,8 @@ namespace OnlineEducation.Business.Handlers.VideoAnswerForExamQuestionHandlers.C
 
                 if (!deleteResult) throw new Exception(ExceptionMessages.ProblemDeletingVideo);
 
-                examQuestion.VideoAnswerForExamQuestion = null;
                 videoAnswerForExamQuestionRepository.Delete(examQuestion.VideoAnswerForExamQuestion);
+                examQuestion.VideoAnswerForExamQuestion = null;
 
                 var success = await _unitOfWork.CompleteAsync() > 0;
                 if (success) return Unit.Value;

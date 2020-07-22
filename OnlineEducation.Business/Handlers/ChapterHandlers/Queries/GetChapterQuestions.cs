@@ -40,13 +40,11 @@ namespace OnlineEducation.Business.Handlers.ChapterHandlers.Queries
 #pragma warning restore 1998
             {
                 var chapterRepository = _unitOfWork.Repository<Chapter>();
-                var specification = new ChapterWithQuestionsSpecification(request.ChapterId, request.PaginationParams);
+                var specification = new ChapterWithQuestionsSpecification(request.ChapterId);
 
                 var questions = chapterRepository.GetEntityWithSpecificationAsync(specification).Result
-                    .ExamQuestions
-                    .Skip(specification.Skip)
-                    .Take(specification.Take)
-                    .ToList();
+                    .ExamQuestions.Skip(request.PaginationParams.PageSize * (request.PaginationParams.PageIndex - 1))
+                    .Take(request.PaginationParams.PageSize).ToImmutableList();
 
                 if (questions == null) throw new RestException(HttpStatusCode.NotFound, "Questions not found");
 
