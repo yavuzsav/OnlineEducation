@@ -9,7 +9,7 @@ using OnlineEducation.DataAccess.Concrete.EntityFramework;
 namespace OnlineEducation.DataAccess.Migrations
 {
     [DbContext(typeof(OnlineEducationContext))]
-    [Migration("20200724111549_AddedQuestionAndQuestionImageEntity")]
+    [Migration("20200724113413_AddedQuestionAndQuestionImageEntity")]
     partial class AddedQuestionAndQuestionImageEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,6 +243,59 @@ namespace OnlineEducation.DataAccess.Migrations
                     b.ToTable("Lessons");
                 });
 
+            modelBuilder.Entity("OnlineEducation.Entities.Entities.Question", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsAnswerVideo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("OnlineEducation.Entities.Entities.QuestionImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId")
+                        .IsUnique();
+
+                    b.ToTable("QuestionImage");
+                });
+
             modelBuilder.Entity("OnlineEducation.Entities.Entities.VideoAnswerForExamQuestion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -448,6 +501,28 @@ namespace OnlineEducation.DataAccess.Migrations
                     b.HasOne("OnlineEducation.Entities.Entities.Category", "Category")
                         .WithMany("Lessons")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("OnlineEducation.Entities.Entities.Question", b =>
+                {
+                    b.HasOne("OnlineEducation.Entities.Entities.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineEducation.Entities.Identity.AppUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+                });
+
+            modelBuilder.Entity("OnlineEducation.Entities.Entities.QuestionImage", b =>
+                {
+                    b.HasOne("OnlineEducation.Entities.Entities.Question", "Question")
+                        .WithOne("QuestionImage")
+                        .HasForeignKey("OnlineEducation.Entities.Entities.QuestionImage", "QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
