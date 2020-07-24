@@ -131,6 +131,23 @@ namespace OnlineEducation.DataAccess.Concrete.SeedData
                 await context.ExamQuestions.AddRangeAsync(faker.Generate(500));
             }
 
+            if (!context.Questions.Any())
+            {
+                var faker = new Faker<Question>()
+                    .RuleFor(x => x.Message, (f, question) => f.Lorem.Lines(1))
+                    .RuleFor(x => x.CreatedAt, (f, question) => f.Date.Past(0))
+                    .RuleFor(x => x.IsAnswerVideo, (f, question) => f.Random.Bool())
+                    .RuleFor(x => x.LessonId, (f, question) => f.PickRandom(context.Lessons?.Select(x => x.Id).ToList()))
+                    .RuleFor(x => x.OwnerId, (f, question) => f.PickRandom(context.Users?.Select(x => x.Id).ToList()))
+                    .RuleFor(x => x.QuestionImage, (f, question) => new QuestionImage
+                    {
+                        Url = f.Image.PicsumUrl(),
+                        PublicId = "fake data"
+                    });
+
+                await context.Questions.AddRangeAsync(faker.Generate(20));
+            }
+
             await context.SaveChangesAsync();
         }
     }
