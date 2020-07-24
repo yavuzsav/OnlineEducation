@@ -14,6 +14,7 @@ namespace OnlineEducation.Business.Specifications.QuestionSpecifications
             x.OwnerId == userId)
         {
             AddInclude(x => x.Lesson);
+            AddInclude(x => x.QuestionImage);
             ApplyPaging(paginationParams.PageSize * (paginationParams.PageIndex - 1), paginationParams.PageSize);
 
             if (!string.IsNullOrEmpty(paginationParams.Sort))
