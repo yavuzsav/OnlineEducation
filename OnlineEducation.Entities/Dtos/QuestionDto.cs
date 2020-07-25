@@ -8,6 +8,7 @@ namespace OnlineEducation.Entities.Dtos
         public DateTime CreatedAt { get; set; }
         public bool IsAnswerVideo { get; set; }
         public string LessonName { get; set; }
+        public string CategoryName { get; set; }
         public QuestionImageDto QuestionImageDto { get; set; }
     }
 }
