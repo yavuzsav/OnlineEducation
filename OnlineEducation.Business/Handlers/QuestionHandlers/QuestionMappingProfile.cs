@@ -8,8 +8,6 @@ namespace OnlineEducation.Business.Handlers.QuestionHandlers
     {
         public QuestionMappingProfile()
         {
-            CreateMap<QuestionImage, QuestionImageDto>();
-
             CreateMap<Question, QuestionDto>()
                 .ForMember(dest => dest.LessonName, opt => opt.MapFrom(src => src.Lesson.Name))
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Lesson.Category.Name))
