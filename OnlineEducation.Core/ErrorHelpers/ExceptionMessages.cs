@@ -7,5 +7,7 @@
         public static string ProblemDeletingVideo { get; set; } = "Problem deleting the video";
         public static string VideoUploadError { get; set; } = "Video Upload Error";
         public static string VideoDeleteError { get; set; } = "Video Delete Error";
+        public static string ImageUploadError { get; set; } = "Image Upload Error";
+        public static string ImageDeleteError { get; set; } = "Image Delete Error";
     }
 }

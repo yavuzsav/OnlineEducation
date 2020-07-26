@@ -12,31 +12,30 @@ using UploadResult = OnlineEducation.Core.Helpers.UploadResult;
 
 namespace OnlineEducation.Core.Services
 {
-    public class CloudinaryVideoService : IVideoService
+    public class CloudinaryImageService : IImageService
     {
         private readonly Cloudinary _cloudinary;
 
-        public CloudinaryVideoService(IOptions<CloudinarySettings> config)
+        public CloudinaryImageService(IOptions<CloudinarySettings> config)
         {
-            var acc = new Account(
+            var account = new Account(
                 config.Value.CloudName,
                 config.Value.ApiKey,
-                config.Value.ApiSecret
-            );
+                config.Value.ApiSecret);
 
-            _cloudinary = new Cloudinary(acc);
+            _cloudinary = new Cloudinary(account);
         }
 
-        public async Task<UploadResult> UploadVideosAsync(List<IFormFile> files, string folder = "")
+        public async Task<UploadResult> UploadImagesAsync(List<IFormFile> files, string folder = "")
         {
-            var uploadResult = new VideoUploadResult();
+            var uploadResult = new ImageUploadResult();
 
             foreach (var file in files)
             {
                 if (file.Length <= 0) continue;
 
                 await using var stream = file.OpenReadStream();
-                var uploadParams = new VideoUploadParams
+                var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
                     Folder = folder
@@ -56,12 +55,12 @@ namespace OnlineEducation.Core.Services
             };
         }
 
-        public async Task<UploadResult> UploadVideoAsync(IFormFile file, string folder = "")
+        public async Task<UploadResult> UploadImageAsync(IFormFile file, string folder = "")
         {
-            if (file.Length <= 0) throw new Exception(ExceptionMessages.VideoUploadError);
+            if (file.Length <= 0) throw new Exception(ExceptionMessages.ImageUploadError);
 
             await using var stream = file.OpenReadStream();
-            var uploadParams = new VideoUploadParams
+            var uploadParams = new ImageUploadParams
             {
                 File = new FileDescription(file.FileName, stream),
                 Folder = folder
@@ -69,8 +68,7 @@ namespace OnlineEducation.Core.Services
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-            if (uploadResult.Error != null)
-                throw new Exception(uploadResult.Error.Message);
+            if (uploadResult.Error != null) throw new Exception(uploadResult.Error.Message);
 
             return new UploadResult
             {
@@ -80,30 +78,28 @@ namespace OnlineEducation.Core.Services
             };
         }
 
-        public async Task<bool> DeleteVideosAsync(List<string> publicIds)
+        public async Task<bool> DeleteImagesAsync(List<string> publicIds)
         {
             var result = new DeletionResult();
 
             foreach (var publicId in publicIds)
             {
-                var deleteParams = new DeletionParams(publicId)
-                {
-                    ResourceType = ResourceType.Video
-                };
+                var deleteParams = new DeletionParams(publicId);
                 result = await _cloudinary.DestroyAsync(deleteParams);
 
-                if (result.Error != null) throw new Exception(ExceptionMessages.VideoDeleteError);
+                if (result.Error != null) throw new Exception(ExceptionMessages.ImageDeleteError);
             }
 
             return result.Result == "ok";
         }
 
-        public async Task<bool> DeleteVideoAsync(string publicId)
+        public async Task<bool> DeleteImageAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId)
             {
-                ResourceType = ResourceType.Video
+                ResourceType = ResourceType.Image
             };
+
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result.Result == "ok";
