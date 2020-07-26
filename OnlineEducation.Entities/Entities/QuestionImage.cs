@@ -1,8 +1,9 @@
 ﻿using System;
+using OnlineEducation.Entities.Abstract;
 
 namespace OnlineEducation.Entities.Entities
 {
-    public class QuestionImage
+    public class QuestionImage : IEntity
     {
         public Guid Id { get; set; }
         public string Url { get; set; }

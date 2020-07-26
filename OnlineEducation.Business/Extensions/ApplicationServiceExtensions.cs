@@ -24,6 +24,7 @@ namespace OnlineEducation.Business.Extensions
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IVideoService, CloudinaryVideoService>();
+            services.AddScoped<IImageService, CloudinaryImageService>();
 
             services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
