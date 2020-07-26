@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,8 @@ namespace OnlineEducation.Core.Helpers
 
         private string GetErrorMessage()
         {
-            return $"This file extension is not allowed! Allowed file extensions {_extensions}";
+            var result = String.Join(", ", _extensions);
+            return $"This file extension is not allowed! Allowed file extensions {result}";
         }
     }
 }

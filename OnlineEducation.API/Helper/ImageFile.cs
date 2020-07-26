@@ -3,10 +3,10 @@ using OnlineEducation.Core.Helpers;
 
 namespace OnlineEducation.API.Helper
 {
-    public class VideoFile
+    public class ImageFile
     {
-        [MaxFileSize(250000000)]
-        [AllowExtensions(new []{".mp3", ".mp4"})]
+        [MaxFileSize(50000000)]
+        [AllowExtensions(new []{".png", ".jpg", ".jpeg"})]
         public IFormFile File { get; set; }
     }
 }
