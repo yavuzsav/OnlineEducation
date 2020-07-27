@@ -23,5 +23,8 @@ namespace OnlineEducation.DataAccess.Concrete.EntityFramework
         public DbSet<ExamQuestion> ExamQuestions { get; set; }
         public DbSet<VideoAnswerForExamQuestion> VideoAnswerForExamQuestions { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<AnswerVideo> AnswerVideos { get; set; }
+        public DbSet<AnswerImage> AnswerImages { get; set; }
     }
 }
