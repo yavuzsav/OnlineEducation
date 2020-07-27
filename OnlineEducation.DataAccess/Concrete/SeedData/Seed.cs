@@ -143,6 +143,18 @@ namespace OnlineEducation.DataAccess.Concrete.SeedData
                     {
                         Url = f.Image.PicsumUrl(),
                         PublicId = "fake data"
+                    })
+                    .RuleFor(x => x.Answer, (f, question) => new Answer
+                    {
+                        AnswerImages = new List<AnswerImage>
+                        {
+                            new AnswerImage
+                            {
+                                Url = f.Image.PicsumUrl(),
+                                PublicId = "fake data",
+                                CreatedAt = DateTime.Now,
+                            }
+                        }
                     });
 
                 await context.Questions.AddRangeAsync(faker.Generate(20));

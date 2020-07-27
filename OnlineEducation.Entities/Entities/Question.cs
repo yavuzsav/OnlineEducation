@@ -18,5 +18,6 @@ namespace OnlineEducation.Entities.Entities
         public Lesson Lesson { get; set; }
 
         public QuestionImage QuestionImage { get; set; }
+        public Answer Answer { get; set; }
     }
 }
