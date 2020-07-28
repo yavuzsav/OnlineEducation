@@ -15,6 +15,9 @@ namespace OnlineEducation.Business.Specifications.QuestionSpecifications
         {
             AddInclude(x => x.Lesson);
             AddInclude(x => x.QuestionImage);
+            AddInclude(x => x.Answer);
+            AddNestedInclude("Answer.AnswerVideo");
+            AddNestedInclude("Answer.AnswerImages");
             AddNestedInclude("Lesson.Category");
             ApplyPaging(paginationParams.PageSize * (paginationParams.PageIndex - 1), paginationParams.PageSize);
 

@@ -11,5 +11,6 @@ namespace OnlineEducation.Entities.Dtos
         public string LessonName { get; set; }
         public string CategoryName { get; set; }
         public QuestionImageDto QuestionImageDto { get; set; }
+        public AnswerDto Answer { get; set; }
     }
 }
