@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace OnlineEducation.Business.Handlers.AnswerHandlers.Commands
                 if (question.IsAnswerVideo)
                     throw new RestException(HttpStatusCode.BadRequest, "Answer should not be image");
 
-                if (question.IsAnswerVideo && question.Answer.AnswerVideo != null)
+                if (question.IsAnswerVideo && question.Answer?.AnswerVideo != null)
                     throw new RestException(HttpStatusCode.BadRequest, "Answer already exists");
 
                 var uploadResult = await _imageService.UploadImageAsync(request.File, "OnlineEducation/AnswerImages");
@@ -55,6 +56,8 @@ namespace OnlineEducation.Business.Handlers.AnswerHandlers.Commands
                     CreatedAt = uploadResult.CreatedAt,
                 };
 
+                question.Answer ??= new Answer();
+                question.Answer.AnswerImages ??= new List<AnswerImage>();
                 question.Answer.AnswerImages.Add(answerImage);
 
                 var result = await _unitOfWork.CompleteAsync() > 0;

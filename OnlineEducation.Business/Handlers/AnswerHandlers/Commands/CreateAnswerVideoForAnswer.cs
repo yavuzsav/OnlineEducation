@@ -43,10 +43,10 @@ namespace OnlineEducation.Business.Handlers.AnswerHandlers.Commands
                 if (!question.IsAnswerVideo)
                     throw new RestException(HttpStatusCode.BadRequest, "Answer should not be video");
 
-                if (question.IsAnswerVideo && question.Answer.AnswerVideo != null)
+                if (question.IsAnswerVideo && question.Answer?.AnswerVideo != null)
                     throw new RestException(HttpStatusCode.BadRequest, "Answer already exists");
 
-                if (!question.IsAnswerVideo && question.Answer.AnswerImages != null)
+                if (!question.IsAnswerVideo && question.Answer?.AnswerImages != null)
                     throw new RestException(HttpStatusCode.BadRequest, "Answer already exists");
 
                 var uploadResult = await _videoService.UploadVideoAsync(request.File, "OnlineEducation/AnswerVideos");
@@ -58,6 +58,7 @@ namespace OnlineEducation.Business.Handlers.AnswerHandlers.Commands
                     CreatedAt = uploadResult.CreatedAt,
                 };
 
+                question.Answer ??= new Answer();
                 question.Answer.AnswerVideo = answerVideo;
 
                 var result = await _unitOfWork.CompleteAsync() > 0;
