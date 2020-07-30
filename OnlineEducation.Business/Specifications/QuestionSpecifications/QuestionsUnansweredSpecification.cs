@@ -4,21 +4,19 @@ using OnlineEducation.Entities.Entities;
 
 namespace OnlineEducation.Business.Specifications.QuestionSpecifications
 {
-    public class QuestionsWithLessonSpecification : BaseSpecification<Question>
+    public class QuestionsUnansweredSpecification : BaseSpecification<Question>
     {
-        public QuestionsWithLessonSpecification(string userId) : base(x => x.OwnerId == userId)
+        public QuestionsUnansweredSpecification() : base(x => x.Answer == null)
         {
         }
 
-        public QuestionsWithLessonSpecification(string userId, PaginationParams paginationParams) : base(x =>
-            x.OwnerId == userId)
+        public QuestionsUnansweredSpecification(PaginationParams paginationParams) : base(x => x.Answer == null)
         {
             AddInclude(x => x.Lesson);
             AddInclude(x => x.QuestionImage);
             AddInclude(x => x.Answer);
-            AddNestedInclude("Answer.AnswerVideo");
-            AddNestedInclude("Answer.AnswerImages");
             AddNestedInclude("Lesson.Category");
+
             ApplyPaging(paginationParams.PageSize * (paginationParams.PageIndex - 1), paginationParams.PageSize);
 
             if (!string.IsNullOrEmpty(paginationParams.Sort))

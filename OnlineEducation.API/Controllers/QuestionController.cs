@@ -16,10 +16,26 @@ namespace OnlineEducation.API.Controllers
     {
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<Pagination<QuestionDto>>> GetQuestionsByUser(
+        public async Task<ActionResult<Pagination<QuestionDto>>> GetUserQuestions(
             [FromQuery] PaginationParams paginationParams)
         {
-            return await Mediator.Send(new GetQuestionsByUser.Query {PaginationParams = paginationParams});
+            return await Mediator.Send(new GetUserQuestions.Query {PaginationParams = paginationParams});
+        }
+
+        [HttpGet("unanswered")]
+        public async Task<ActionResult<Pagination<QuestionDto>>> GetUserUnansweredQuestions(
+            [FromQuery] PaginationParams paginationParams)
+        {
+            return await Mediator.Send(new GetUserUnansweredQuestions.Query {PaginationParams = paginationParams});
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
+        [HttpGet("AllUnanswered")]
+        public async Task<ActionResult<Pagination<QuestionDto>>> GetAllUserUnansweredQuestions(
+            [FromQuery] PaginationParams paginationParams)
+        {
+            return await Mediator.Send(new GetAllUnansweredQuestions.Query {PaginationParams = paginationParams});
         }
 
         [HttpPost]
@@ -29,7 +45,7 @@ namespace OnlineEducation.API.Controllers
         }
 
         [HttpPost("{questionId}/addImage")]
-        public async Task<ActionResult<Unit>> AddImage(Guid questionId,[FromForm] ImageFile imageFile)
+        public async Task<ActionResult<Unit>> AddImage(Guid questionId, [FromForm] ImageFile imageFile)
         {
             return await Mediator.Send(new CreateQuestionImage.Command
                 {QuestionId = questionId, File = imageFile.File});

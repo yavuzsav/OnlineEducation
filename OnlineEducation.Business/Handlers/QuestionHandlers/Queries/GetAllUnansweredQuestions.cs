@@ -16,7 +16,7 @@ using OnlineEducation.Entities.Identity;
 
 namespace OnlineEducation.Business.Handlers.QuestionHandlers.Queries
 {
-    public class GetQuestionsByUser
+    public class GetAllUnansweredQuestions
     {
         public class Query : IRequest<Pagination<QuestionDto>>
         {
@@ -26,31 +26,20 @@ namespace OnlineEducation.Business.Handlers.QuestionHandlers.Queries
         public class Handler : IRequestHandler<Query, Pagination<QuestionDto>>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
-            private readonly UserManager<AppUser> _userManager;
 
-            public Handler(IUnitOfWork unitOfWork, IUserAccessor userAccessor, IMapper mapper,
-                UserManager<AppUser> userManager)
+            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
-                _userAccessor = userAccessor;
                 _mapper = mapper;
-                _userManager = userManager;
             }
 
             public async Task<Pagination<QuestionDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var userId = _userAccessor.GetCurrentUserId();
-                var user = await _userManager.FindByIdAsync(userId);
-
-                if (user == null) throw new RestException(HttpStatusCode.Unauthorized);
-
                 var questionRepository = _unitOfWork.Repository<Question>();
-                var questionWithLessonSpecification =
-                    new QuestionsWithLessonSpecification(userId, request.PaginationParams);
-                var questions = await questionRepository.ListWithSpecificationAsync(questionWithLessonSpecification);
-                var count = await questionRepository.CountAsync(new QuestionsWithLessonSpecification(userId));
+                var questionsUnansweredSpecification = new QuestionsUnansweredSpecification(request.PaginationParams);
+                var questions = await questionRepository.ListWithSpecificationAsync(questionsUnansweredSpecification);
+                var count = await questionRepository.CountAsync(new QuestionsUnansweredSpecification());
 
                 var mappedData = _mapper.Map<IReadOnlyList<Question>, IReadOnlyList<QuestionDto>>(questions);
 
