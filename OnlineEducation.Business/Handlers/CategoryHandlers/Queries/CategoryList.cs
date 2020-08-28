@@ -1,30 +1,35 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using OnlineEducation.Business.Specifications.CategorySpecifications;
 using OnlineEducation.Core.PaginationHelper;
 using OnlineEducation.DataAccess.Interfaces;
+using OnlineEducation.Entities.Dtos;
 using OnlineEducation.Entities.Entities;
 
 namespace OnlineEducation.Business.Handlers.CategoryHandlers.Queries
 {
     public class CategoryList
     {
-        public class Query : IRequest<Pagination<Category>>
+        public class Query : IRequest<Pagination<CategoryDto>>
         {
             public PaginationParams PaginationParams { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Pagination<Category>>
+        public class Handler : IRequestHandler<Query, Pagination<CategoryDto>>
         {
             private readonly IUnitOfWork _unitOfWork;
+            private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unitOfWork)
+            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
+                _unitOfWork = unitOfWork ?? throw new System.ArgumentNullException(nameof(unitOfWork));
             }
 
-            public async Task<Pagination<Category>> Handle(Query request,
+            public async Task<Pagination<CategoryDto>> Handle(Query request,
                 CancellationToken cancellationToken)
             {
                 var categoryRepository = _unitOfWork.Repository<Category>();
@@ -34,8 +39,10 @@ namespace OnlineEducation.Business.Handlers.CategoryHandlers.Queries
                 var categories = await categoryRepository.ListWithSpecificationAsync(categorySpec);
                 var count = await categoryRepository.CountAsync(new CategorySpecification());
 
-                return new Pagination<Category>(request.PaginationParams.PageIndex,
-                    request.PaginationParams.PageSize, count, categories);
+                var mappedData = _mapper.Map<IReadOnlyList<CategoryDto>>(categories);
+
+                return new Pagination<CategoryDto>(request.PaginationParams.PageIndex,
+                    request.PaginationParams.PageSize, count, mappedData);
             }
         }
     }

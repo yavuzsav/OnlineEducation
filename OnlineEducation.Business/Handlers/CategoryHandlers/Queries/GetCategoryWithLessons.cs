@@ -14,12 +14,12 @@ namespace OnlineEducation.Business.Handlers.CategoryHandlers.Queries
 {
     public class GetCategoryWithLessons
     {
-        public class Query : IRequest<CategoryDto>
+        public class Query : IRequest<CategoryWithLessonsDto>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, CategoryDto>
+        public class Handler : IRequestHandler<Query, CategoryWithLessonsDto>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
@@ -30,7 +30,7 @@ namespace OnlineEducation.Business.Handlers.CategoryHandlers.Queries
                 _mapper = mapper;
             }
 
-            public async Task<CategoryDto> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<CategoryWithLessonsDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var categoryRepository = _unitOfWork.Repository<Category>();
 
@@ -39,7 +39,7 @@ namespace OnlineEducation.Business.Handlers.CategoryHandlers.Queries
 
                 if (category == null) throw new RestException(HttpStatusCode.NotFound);
 
-                return _mapper.Map<Category, CategoryDto>(category);
+                return _mapper.Map<Category, CategoryWithLessonsDto>(category);
             }
         }
     }

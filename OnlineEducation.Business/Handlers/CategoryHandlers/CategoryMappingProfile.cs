@@ -8,8 +8,10 @@ namespace OnlineEducation.Business.Handlers.CategoryHandlers
     {
         public CategoryMappingProfile()
         {
-            CreateMap<Category, CategoryDto>()
+            CreateMap<Category, CategoryWithLessonsDto>()
                 .ForMember(dest => dest.Lessons, opt => opt.MapFrom(src => src.Lessons));
+
+            CreateMap<Category, CategoryDto>();
         }
     }
 }

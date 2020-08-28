@@ -6,23 +6,22 @@ using OnlineEducation.Business.Handlers.CategoryHandlers.Commands;
 using OnlineEducation.Business.Handlers.CategoryHandlers.Queries;
 using OnlineEducation.Core.PaginationHelper;
 using OnlineEducation.Entities.Dtos;
-using OnlineEducation.Entities.Entities;
 
 namespace OnlineEducation.API.Controllers
 {
     public class CategoriesController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<Pagination<Category>>> GetCategories(
+        public async Task<ActionResult<Pagination<CategoryDto>>> GetCategories(
             [FromQuery] PaginationParams paginationParams)
         {
-            return await Mediator.Send(new CategoryList.Query {PaginationParams = paginationParams});
+            return await Mediator.Send(new CategoryList.Query { PaginationParams = paginationParams });
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryDto>> GetCategory(Guid id)
+        public async Task<ActionResult<CategoryWithLessonsDto>> GetCategory(Guid id)
         {
-            return await Mediator.Send(new GetCategoryWithLessons.Query {Id = id});
+            return await Mediator.Send(new GetCategoryWithLessons.Query { Id = id });
         }
 
         [HttpPost]
@@ -41,7 +40,7 @@ namespace OnlineEducation.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Unit>> Delete(Guid id)
         {
-            return await Mediator.Send(new DeleteCategory.Command {Id = id});
+            return await Mediator.Send(new DeleteCategory.Command { Id = id });
         }
     }
 }
