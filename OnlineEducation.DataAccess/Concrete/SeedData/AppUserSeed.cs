@@ -30,6 +30,31 @@ namespace OnlineEducation.DataAccess.Concrete.SeedData
                     await userManager.CreateAsync(student, "password");
                     await userManager.AddToRoleAsync(student, "Student");
                 }
+
+                var teacherUsers = new List<AppUser>
+                {
+                    new AppUser {Email = "john@test.com", UserName = "john@test.com", EmailConfirmed = true,},
+                    new AppUser {Email = "ivy@test.com", UserName = "ivy@test.com", EmailConfirmed = true,},
+                };
+
+                foreach (var teacherUser in teacherUsers)
+                {
+                    await userManager.CreateAsync(teacherUser, "password");
+                    await userManager.AddToRoleAsync(teacherUser, "Teacher");
+                }
+
+                var adminUsers = new List<AppUser>
+                {
+                    new AppUser {Email = "luna@test.com", UserName = "luna@test.com", EmailConfirmed = true,},
+                    new AppUser {Email = "finn@test.com", UserName = "finn@test.com", EmailConfirmed = true,},
+                    new AppUser {Email = "gabriel@test.com", UserName = "gabriel@test.com", EmailConfirmed = true,},
+                };
+
+                foreach (var adminUser in adminUsers)
+                {
+                    await userManager.CreateAsync(adminUser, "password");
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
             }
         }
     }
